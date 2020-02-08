@@ -91,12 +91,14 @@ public class HashTable<T> {
     }
 
     public Object[] contains(Object item) {
-        int index = (int)(item.hashCode() % itemsCapacity);
+        int index = (int)( (item.hashCode() > 0 ? item.hashCode() : item.hashCode() * -1) % itemsCapacity);
 
         while(!(items.get(index) instanceof None)) {
             if(items.get(index) == item) {
                 return new Object[]{true, index};
             }
+
+            index = (int)((index + 1) % itemsCapacity);
         }
 
         return new Object[]{false};
@@ -106,7 +108,7 @@ public class HashTable<T> {
         Object[] itemInfo = contains(item);
 
         if(itemInfo[0].equals(true)) {
-            items.add((int)itemInfo[1], new Placeholder());
+            items.set((int)itemInfo[1], new Placeholder());
             numberOfItems--;
         }
 
@@ -122,6 +124,10 @@ public class HashTable<T> {
 
         for (String item : items) {
             hs.add(item);
+        }
+
+        for (int i = 0; i < 20; i++) {
+            hs.remove(items[i]);
         }
     }
 }
