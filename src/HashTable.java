@@ -6,14 +6,12 @@ import java.util.logging.Logger;
 public class HashTable<T> {
     public static final Logger logger = Logger.getLogger("HashTable");
 
-    private int listSize;
     private List<Object> items;
     private double itemsCapacity;
     private double numberOfItems;
     private double maxLoadFactor;
 
     public HashTable() {
-        listSize = 10;
         itemsCapacity = 10;
         items = new ArrayList<>();
         numberOfItems = 0;
