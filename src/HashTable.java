@@ -1,4 +1,3 @@
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -44,7 +43,7 @@ public class HashTable<T> {
         List<Object> temp_list = new ArrayList<>();
 
         for (Object item : items) {
-            if (!(item instanceof None)) {
+            if (!(item instanceof None) && !(item instanceof Placeholder)) {
                 temp_list.add(item);
             }
         }
@@ -92,7 +91,7 @@ public class HashTable<T> {
         int index = (int)( (item.hashCode() > 0 ? item.hashCode() : item.hashCode() * -1) % itemsCapacity);
 
         while(!(items.get(index) instanceof None)) {
-            if(items.get(index) == item) {
+            if(items.get(index).equals(item)) {
                 return new Object[]{true, index};
             }
 
@@ -117,15 +116,37 @@ public class HashTable<T> {
     }
 
     public static void main(String[] args) {
-        HashTable<String> hs = new HashTable<>();
-        String[] items = new String[]{"alpha", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel", "indiana", "juliet", "kilo", "lima", "maverick", "nancy", "oscar", "papa", "quebeck", "romeo", "sierra", "tango", "uniform", "victory", "whiskey", "xray", "yankee", "zulu"};
+        HashTable<String> ht = new HashTable<>();
+        String[] items = new String[]{"alpha", "bravo", "charlie", "delta", "echo", "foxtrot", "golf", "hotel", "indiana", "juliet", "kilo", "lima", "maverick", "nancy", "oscar", "papa", "quebec", "romeo", "sierra", "tango", "uniform", "victory", "whiskey", "x-ray", "yankee", "zulu"};
 
         for (String item : items) {
-            hs.add(item);
+            ht.add(item);
         }
 
         for (int i = 0; i < 20; i++) {
-            hs.remove(items[i]);
+            ht.remove(items[i]);
+        }
+
+        ht = new HashTable<>();
+        int[] numbers = new int[] {40, 23, 42, 92, 84, 48, 2, 7, 0, 823, 94, 78, 32, 98, 43, 90, 32, 43, 89, 75, 47};
+
+        for(int number : numbers) {
+            ht.add(number);
+        }
+
+        for (int i = 0; i < 15; i++) {
+            ht.remove(numbers[i]);
+        }
+
+        ht = new HashTable<>();
+        double[] float_numbers = new double[] {36.0, 25.0, 8.0, 48.5, 49.0, 93.0, 81.0, 44.5, 72.0, 13.0, 88.5, 69.5, 11.0, 4.0, 2.0, 47.0, 23.0, 95.0, 82.5, 25.5, 36.0, 15.5, 91.0, 2.5, 68.0, 53.0, 26.0, 92.5, 90.5, 35.0};
+
+        for(double number : float_numbers) {
+            ht.add(number);
+        }
+
+        for (int i = 0; i < 17; i++) {
+            ht.remove(float_numbers[i]);
         }
     }
 }
